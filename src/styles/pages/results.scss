@@ -1,0 +1,93 @@
+.truncate{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: var(--word-break, 'none');
+    overflow: hidden;
+    hyphens: auto;
+    text-align: var(--align, left);
+    width: 70%;
+    height: 42px;
+}
+
+.results-container{
+    background: $white;
+    padding: 1.2rem;
+
+    @include element('item'){
+        display: flex;
+        
+        &:not(:last-of-type){
+            padding-bottom: 1.2rem;
+            margin-bottom: 1.2rem;
+            border-bottom: 1px solid $light-gray;
+        }
+
+        @include element('img'){
+            width: 140px;
+            border-radius: 4px;
+            
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+
+            @include bp(md){
+                width: 180px;
+            }
+        }
+
+        @include element('content'){
+            margin-left: 1.2rem;
+            margin-top: .4rem;
+            
+            @include bp(md){
+                width: 77%;
+                margin: 1.2rem 0 0 1.2rem;
+            }
+        }
+
+        @include element('price'){
+            font-size: 18px;
+            margin-bottom: .5rem;
+            img{
+                vertical-align: bottom;
+                margin-left: .5rem;
+            }
+
+            @include bp(md){
+                font-size: 24px;
+                margin-bottom: .6rem;
+            }
+        }
+
+        @include element('location'){
+            font-size: 12px;
+            color: $dark-gray;
+            margin-bottom: .5rem;
+            display: block;
+            text-align: right;
+            
+            @include bp(md){
+                margin-bottom: .6rem;
+            }
+        }
+
+        @include element('title'){
+            font-size: 15px;
+            line-height: 1.2;
+            @extend .truncate;
+            font-weight: 400;
+
+            @include bp(md){
+                font-size: 18px;
+                width: 45%;
+                height: auto;
+                line-height: 1.2;
+            }
+
+        }
+    }
+
+}

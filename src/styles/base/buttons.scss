@@ -1,0 +1,20 @@
+button{
+    background-color: transparent;
+    border: none;
+    outline: none;
+
+    &.btn{
+        font-size: 16px;
+        display: inline-block;
+        border-radius: 6px;
+        font-weight: 600;
+        padding: 1rem 2.4rem;
+        width: 100%;
+        letter-spacing: 0.9px;
+
+        @include modifier('primary'){
+            background: $blue;
+            color: $white;
+        }
+    }
+}

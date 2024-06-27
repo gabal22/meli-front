@@ -1,0 +1,33 @@
+//COLORS
+$yellow: #FFE600;
+$blue: #3483FA;
+$back: #333;
+$dark-gray: #666;
+$gray: #999;
+$light-gray: #EEE;
+$white: #fff;
+
+
+
+//typography
+$font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+sans-serif;
+$weight-font: 300;
+$fs-base: 1rem;
+$base-line-height: 1.5; // Line-height base
+$vertical-rhythm-multiplier: .8; // Multiplicador del ritmo vertical -->https://zellwk.com/blog/why-vertical-rhythms/
+
+//spacing
+$base-padding: 1rem;
+$base-margin: 1rem;
+
+//layout
+$width-container: 1280px;
+$grid-columns: 12;
+$gutter-width: 1rem;
+
+//borders
+$base-border-radius: .5rem;
+
+
