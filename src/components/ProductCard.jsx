@@ -3,7 +3,7 @@ import { formatter } from '../utils';
 import shippingIcon from '../assets/ic_shipping.png';
 
 export const ProductCard = (props) => {
-    const { id, picture, price, free_shipping, title} = props
+    const { id, picture, price, free_shipping, title, location} = props
 
     const navigateTo = useNavigate();
     const handleDetail = (id) => {
@@ -20,7 +20,7 @@ export const ProductCard = (props) => {
             {formatter.format(price.amount)}
             {free_shipping &&  <img src={shippingIcon} alt="shipping icon" />}
         </div>
-        <span className="results-container__item__location">pos no se</span>
+        <span className="results-container__item__location">{location}</span>
         <h2 className="results-container__item__title">{title}</h2>
         </div>
     </li>  

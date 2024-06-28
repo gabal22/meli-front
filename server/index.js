@@ -61,7 +61,8 @@ app.get("/api/items", async (req, res) => {
         },
         picture: result.thumbnail,
         condition: result.condition,
-        free_shipping: result.shipping.free_shipping
+        free_shipping: result.shipping.free_shipping,
+        location: result.seller.nickname
       };
     });
 
