@@ -1,6 +1,7 @@
 .nav-header{
     background: $yellow;
     padding: .7em 1.4em;
+    margin-bottom: 1.4rem;
     @include element('container'){
         display: flex;
         justify-content: space-between;
@@ -30,11 +31,12 @@
             top: 0;
             height: 100%;
             border: none;
-            width: 34px;
+            width: 40px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            background-color: $light-gray;
         }
         
         @include bp('md'){

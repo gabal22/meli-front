@@ -7,7 +7,7 @@
     hyphens: auto;
     text-align: var(--align, left);
     width: 70%;
-    height: 42px;
+    height: 38px;
 }
 
 .results-container{
@@ -16,6 +16,7 @@
 
     @include element('item'){
         display: flex;
+        cursor: pointer;
         
         &:not(:last-of-type){
             padding-bottom: 1.2rem;
@@ -85,6 +86,7 @@
                 width: 45%;
                 height: auto;
                 line-height: 1.2;
+                -webkit-line-clamp: initial;
             }
 
         }

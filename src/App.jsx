@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Home } from './pages/Home'
 import { Results } from './pages/Results'
 import { Detail } from './pages/Detail'
-import { Header } from './components/Header'
+import { Layout } from './Layout'
 
 import './styles/styles.scss'
 
@@ -10,11 +10,11 @@ function App() {
 
   return (
     <Router>
-      <Header />
       <Routes>
-        <Route path='/items' element={<Results />} />
-        <Route path='/items/:id' element={<Detail />} />
-
+        <Route path='/' element={<Layout />}>
+          <Route path='/items' element={<Results />} />
+          <Route path='/items/:id' element={<Detail />} />
+        </Route>
       </Routes>
     </Router>
   )

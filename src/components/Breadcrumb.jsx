@@ -1,13 +1,13 @@
 
-export const Breadcrumb = () => {
+export const Breadcrumb = ({ categories }) => {
+
   return (
     <div className="breadcrumb">
-        <ul>
-          <li><a href="#">electronics</a></li>
-          <li><a href="#">iphone</a></li>
-          <li><a href="#">cellphones</a></li>
-          <li><a href="#">Iphone 15 pro max</a></li>
-        </ul>
-      </div>
+        {categories && <ul>
+          {categories.map(cat => (
+            <li key={cat.id}><a href="#">{cat.name}</a></li>
+          ))}
+        </ul>}
+    </div>
   )
 }

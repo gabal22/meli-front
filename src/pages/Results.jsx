@@ -1,38 +1,35 @@
-import shippingIcon from '../assets/ic_shipping.png';
+import { useEffect, useState } from 'react';
+import { useSearchParams} from 'react-router-dom';
 import { Breadcrumb } from '../components/Breadcrumb';
-import { formatter } from '../utils';
+import { ProductCard } from '../components/ProductCard';
 
 export const Results = () => {
+  const [ categories, setCategories ] = useState()
+  const [ products, setProducts ] = useState()
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get('search')
+
+  const handleSearch = async (q) =>{
+      const request = await fetch(`http://localhost:5000/api/items?q=${q}`);
+      const data = await request.json();
+      setProducts(data.items)
+      setCategories(data.categories)
+  }
+
+  useEffect(()=>{
+    handleSearch(query)
+  },[query])
+
+
   return (
     <div className="container">
-      <Breadcrumb />
+      <Breadcrumb categories={categories} />
       <ol className="results-container">
-        <li className="results-container__item">
-          <div className="results-container__item__img">
-            <img src="https://placehold.co/160x160" alt="" />
-          </div>
-          <div className="results-container__item__content">
-            <div className="results-container__item__price">
-              {formatter.format(1980)}
-              <img src={shippingIcon} alt="" />
-            </div>
-            <span className="results-container__item__location">mendoza</span>
-            <h2 className="results-container__item__title">Apple touch 5g 16bg color negro nuevo</h2>
-          </div>
-        </li>  
-        <li className="results-container__item">
-          <div className="results-container__item__img">
-            <img src="https://placehold.co/160x160" alt="" />
-          </div>
-          <div className="results-container__item__content">
-            <div className="results-container__item__price">
-              {formatter.format(1980)}
-              <img src={shippingIcon} alt="" />
-            </div>
-            <span className="results-container__item__location">mendoza</span>
-            <div className="results-container__item__title">Apple touch 5g 16bg color negro nuevo</div>
-          </div>
-        </li>  
+        {products && 
+          products.map((product) => (
+            <ProductCard {...product} key={product.id}  />
+          ))
+        }
       </ol>
     </div>
   )
