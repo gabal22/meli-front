@@ -10,7 +10,7 @@ const author = {
   lastname: "Baron",
 };
 
-const originalEndpoints = {
+const endpoints = {
   search: "https://api.mercadolibre.com/sites/MLA/search?limit=4&q=",
   items: "https://api.mercadolibre.com/items/",
   categories: "https://api.mercadolibre.com/categories/",
@@ -18,7 +18,7 @@ const originalEndpoints = {
 
 app.get("/api/items", async (req, res) => {
   const query = req.query.q;
-  const url = originalEndpoints.search + query;
+  const url = endpoints.search + query;
 
   const fetchData = async () => {
     try {
@@ -35,22 +35,35 @@ app.get("/api/items", async (req, res) => {
   const getCategories = async (data) => {
     if (data.results[0]?.category_id) {
       const respuestaCategoria = await fetch(
-        originalEndpoints.categories + data.results[0].category_id
+        endpoints.categories + data.results[0].category_id
       );
       const infoCat = await respuestaCategoria.json();
 
       return infoCat.path_from_root;
     } else {
       const respuestaCategoria = await fetch(
-        originalEndpoints.categories + data.available_filters[0]?.values[0].id
+        endpoints.categories + data.available_filters[0]?.values[0].id
       );
       const infoCat = await respuestaCategoria.json();
       return infoCat.path_from_root;
     }
   };
 
-  const getItems = (data) => {
-    const itemsInfo = data.results.map((result) => {
+  const fetchItemData = async (id) => {
+    const url = endpoints.items + id;
+    try {
+      const respuesta = await fetch(url);
+      const data = await respuesta.json();
+      return data;
+    } catch (error) {
+      console.log("error", error.message);
+    }
+  };
+
+
+  const getItems = async (data) => {
+    const itemsInfo = await Promise.all(data.results.map(async (result) => {
+        const i = await fetchItemData(result.id);
       return {
         id: result.id,
         title: result.title,
@@ -62,16 +75,16 @@ app.get("/api/items", async (req, res) => {
         picture: result.thumbnail,
         condition: result.condition,
         free_shipping: result.shipping.free_shipping,
-        location: result.seller.nickname
+        location: i.seller_address.city.name
       };
-    });
+    }));
 
 
     return itemsInfo;
   };
 
   const categories = await getCategories(data);
-  const items = getItems(data);
+  const items = await getItems(data);
 
   res.json({
     author: author,
@@ -84,11 +97,10 @@ app.get("/api/items/:id", async (req, res) => {
   const itemId = req.params.id;
 
   const fetchItemData = async () => {
-    const url = originalEndpoints.items + itemId;
+    const url = endpoints.items + itemId;
     try {
       const respuesta = await fetch(url);
       const data = await respuesta.json();
-      console.log(data)
       return data;
     } catch (error) {
       console.log("error", error.message);
@@ -96,7 +108,7 @@ app.get("/api/items/:id", async (req, res) => {
   };
 
   const fetchItemDescription = async () => {
-    const url = originalEndpoints.items + itemId + "/description";
+    const url = endpoints.items + itemId + "/description";
     try {
       const respuesta = await fetch(url);
       const data = await respuesta.json();
@@ -108,7 +120,7 @@ app.get("/api/items/:id", async (req, res) => {
 
   const getCategories = async (data) => {
     const respuestaCategoria = await fetch(
-      originalEndpoints.categories + itemInfo.category_id
+      endpoints.categories + itemInfo.category_id
     );
     const infoCat = await respuestaCategoria.json();
 
